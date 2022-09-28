@@ -1,0 +1,38 @@
+max:
+  poll:
+    interval:
+      ms: 300000
+
+server:
+  port: 8081
+
+bootstrap:
+  servers: localhost:9092
+
+key:
+  deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+value:
+  deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+security:
+  protocol: SASL_PLAINTEXT
+
+sasl:
+  mechanism: PLAIN
+  jaas:
+    config: org.apache.kafka.common.security.plain.PlainLoginModule required username="mule" password="mule" user_mule="mule";
+
+cache:
+  size: 500
+
+spring:
+  kafka:
+    bootstrap-servers: ${bootstrap.servers}
+    producer:
+      batch-size: ${cache.size}
+app:
+  no-messages:
+    status-text: "No message was found"
+  commit-message: "{ \"Status\": \"Success\", \"StatusMessage\": \"Offset commit was successful\" }"
+  message-found: "{ \"Status\": \"Success\", \"StatusMessage\": \"Message is found\", \"Payload\": {} }"
